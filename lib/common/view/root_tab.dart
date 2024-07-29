@@ -1,5 +1,6 @@
 import 'package:cbhs/common/const/colors.dart';
 import 'package:cbhs/common/layout/default_layout.dart';
+import 'package:cbhs/meal/view/meal_screen.dart';
 import 'package:flutter/material.dart';
 
 class RootTab extends StatefulWidget {
@@ -56,7 +57,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         children: const [
           Center(child: Text('홈')),
           Center(child: Text('외박')),
-          Center(child: Text('식단')),
+          MealScreen(),
           Center(child: Text('마이페이지')),
         ],
       ),
