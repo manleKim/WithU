@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "980169749869",
+    "project_id": "cbhs-d1326",
+    "storage_bucket": "cbhs-d1326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980169749869:android:ab040cf4364d01b7fed664",
+        "android_client_info": {
+          "package_name": "com.example.cbhs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbTJBt9AOrZrXX9ziOAj_nSLplvvzyRmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
