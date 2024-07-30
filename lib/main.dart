@@ -1,3 +1,4 @@
+import 'package:cbhs/common/const/colors.dart';
 import 'package:cbhs/common/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,19 +43,3 @@ class CbhsApp extends StatelessWidget {
     );
   }
 }
-
-// final ThemeData appTheme = ThemeData(
-//   fontFamily: 'Pretendard',
-//   colorScheme: ColorScheme.fromSeed(seedColor: AppColor.main),
-//   useMaterial3: true,
-//   textTheme: const TextTheme(
-//     headlineLarge: AppTextStyles.mainHeadingText,
-//     headlineMedium: AppTextStyles.subHeadingTe,
-//     labelLarge: AppTextStyles.buttonText,
-//     bodyLarge: AppTextStyles.basicText,
-//     bodyMedium: AppTextStyles.regularSemiText,
-//     bodySmall: AppTextStyles.regularText,
-//     labelMedium: AppTextStyles.detailedInfoText,
-//     labelSmall: AppTextStyles.captionText,
-//   ),
-// );

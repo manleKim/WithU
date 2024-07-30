@@ -4,6 +4,8 @@ import 'package:cbhs/meal/view/meal_screen.dart';
 import 'package:flutter/material.dart';
 
 class RootTab extends StatefulWidget {
+  static String get routeName => 'rootTab';
+
   const RootTab({super.key});
 
   @override
@@ -36,20 +38,27 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: mainColor,
-        unselectedItemColor: greyNavigationColor,
-        type: BottomNavigationBarType.fixed,
-        onTap: (int index) {
-          controller.animateTo(index);
-        },
-        currentIndex: index,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "홈"),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "외박"),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "식단"),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "마이페이지"),
-        ],
+      isFloatingButton: true,
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(boxShadow: <BoxShadow>[
+          BoxShadow(color: Colors.grey, blurRadius: 5)
+        ]),
+        child: BottomNavigationBar(
+          elevation: 1,
+          selectedItemColor: mainColor,
+          unselectedItemColor: greyNavigationColor,
+          type: BottomNavigationBarType.fixed,
+          onTap: (int index) {
+            controller.animateTo(index);
+          },
+          currentIndex: index,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: "홈"),
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: "외박"),
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: "식단"),
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: "마이페이지"),
+          ],
+        ),
       ),
       child: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
