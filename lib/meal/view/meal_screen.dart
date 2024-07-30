@@ -48,28 +48,26 @@ class _MealScreenState extends ConsumerState<MealScreen> {
 
     // 에러
     if (state is MealModelError) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            '식단 데이터를 가져오는데 실패했습니다.',
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            state.message,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              ref.read(mealProvider.notifier).getMeal();
-            },
-            child: const Text(
-              '다시시도',
+      return Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              state.message,
+              textAlign: TextAlign.center,
             ),
-          ),
-        ],
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                ref.read(mealProvider.notifier).getMeal();
+              },
+              child: const Text(
+                '다시시도',
+              ),
+            ),
+          ],
+        ),
       );
     }
 

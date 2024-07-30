@@ -21,8 +21,11 @@ class MealStateNotifier extends StateNotifier<MealModelBase> {
   }
 
   void getMeal() async {
-    final resp = await repository.getMeal();
-
-    state = resp;
+    try {
+      final resp = await repository.getMeal();
+      state = resp;
+    } catch (e) {
+      state = MealModelError(message: '식단 데이터를 가져오는데 실패했습니다.\n${e.toString()}');
+    }
   }
 }
