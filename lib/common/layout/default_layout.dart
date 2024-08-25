@@ -3,14 +3,16 @@ import 'package:cbhs/qr/components/qr_dialog.dart';
 import 'package:flutter/material.dart';
 
 class DefaultLayout extends StatelessWidget {
-  final Color? backgroundColor;
   final Widget child;
+  final Color? backgroundColor;
+  final AppBar? appbar;
   final Widget? bottomNavigationBar;
   final bool isFloatingButton;
 
   const DefaultLayout(
       {required this.child,
       this.backgroundColor,
+      this.appbar,
       this.bottomNavigationBar,
       this.isFloatingButton = false,
       super.key});
@@ -19,10 +21,8 @@ class DefaultLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-        child: child,
-      ),
+      appBar: appbar,
+      body: child,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: isFloatingButton
@@ -33,6 +33,7 @@ class DefaultLayout extends StatelessWidget {
               },
               backgroundColor: mainColor,
               foregroundColor: Colors.white,
+              shape: const CircleBorder(),
               elevation: 1,
               child: const Icon(Icons.qr_code),
             )
