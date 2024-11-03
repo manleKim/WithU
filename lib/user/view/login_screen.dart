@@ -1,8 +1,10 @@
 import 'package:cbhs/common/components/custom_text_form_field.dart';
 import 'package:cbhs/common/const/colors.dart';
 import 'package:cbhs/common/const/data.dart';
+import 'package:cbhs/common/const/font_styles.dart';
 import 'package:cbhs/common/layout/default_layout.dart';
 import 'package:cbhs/common/secure_storage/secure_storage.dart';
+import 'package:cbhs/common/util/data.dart';
 import 'package:cbhs/common/view/root_tab.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +61,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   },
                   obscureText: true,
                 ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
+                const SizedBox(height: 20.0),
+                OutlinedButton(
                   onPressed: () async {
                     final String baseURL = (dotenv.env['LOGIN_URL'] as String);
 
@@ -69,7 +71,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       headers: {
                         'content-type': 'application/x-www-form-urlencoded',
                       },
-                      body: 'USER_ID=$dormitoryNumber&USER_PW=$password',
+                      body:
+                          'USER_ID=${getDormitoryFormatted(dormitoryNumber)}&USER_PW=$password',
                     );
 
                     if (resp.statusCode == 200) {
@@ -86,11 +89,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => const RootTab()));
                   },
-                  style: ElevatedButton.styleFrom(
+                  style: OutlinedButton.styleFrom(
                     foregroundColor: mainColor,
+                    backgroundColor: backgroundColor,
+                    side: const BorderSide(color: backgroundColor),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: const Text(
+                  child: Text(
                     '로그인하기',
+                    style: AppTextStyles.buttonText(color: mainColor),
                   ),
                 ),
               ],

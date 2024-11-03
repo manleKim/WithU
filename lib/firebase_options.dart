@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '980169749869',
     projectId: 'cbhs-d1326',
     storageBucket: 'cbhs-d1326.appspot.com',
-    iosBundleId: 'com.example.cbhs',
+    iosBundleId: 'test.flutter.cbhs',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '980169749869',
     projectId: 'cbhs-d1326',
     storageBucket: 'cbhs-d1326.appspot.com',
-    iosBundleId: 'com.example.cbhs',
+    iosBundleId: 'test.flutter.cbhs',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

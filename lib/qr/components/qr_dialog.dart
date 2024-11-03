@@ -64,16 +64,18 @@ class _QrDialogState extends ConsumerState<QrDialog> {
     return AlertDialog(
       icon: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.close)),
-      insetPadding: const EdgeInsets.all(20),
+          icon: const Icon(Icons.close, color: semiBlackColor)),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
       backgroundColor: backgroundColor,
       content: SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 2,
+        height: 350,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('입출입 QR 코드', style: AppTextStyles.subHeading()),
+            Text('입출입 QR 코드',
+                style: AppTextStyles.subHeading()
+                    .copyWith(fontWeight: FontWeight.bold)),
             if (qrState is QrDataModel)
               Expanded(
                 child: Column(
@@ -100,17 +102,39 @@ class _QrDialogState extends ConsumerState<QrDialog> {
                                     const Icon(Icons.refresh),
                                     const SizedBox(width: 10),
                                     Text('새로고침',
-                                        style: AppTextStyles.regularSemiText()),
+                                        style: AppTextStyles.regularSemiText(
+                                            color: backgroundColor)),
                                   ],
                                 ),
                               ),
                             ),
                           ),
                     _seconds > 0
-                        ? Text('유효시간 $_seconds초 남았습니다.',
-                            style: AppTextStyles.basicText())
+                        ? Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '유효시간 ',
+                                  style: AppTextStyles.basicText()
+                                      .copyWith(color: greyStrongColor),
+                                ),
+                                TextSpan(
+                                  text: '$_seconds초',
+                                  style: AppTextStyles.basicText().copyWith(
+                                      color: mainColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                TextSpan(
+                                  text: ' 남았습니다.',
+                                  style: AppTextStyles.basicText(
+                                      color: greyStrongColor),
+                                ),
+                              ],
+                            ),
+                          )
                         : Text('유효시간이 만료되었습니다.',
-                            style: AppTextStyles.basicText()),
+                            style: AppTextStyles.basicText(
+                                color: greyStrongColor)),
                   ],
                 ),
               ),
@@ -122,7 +146,36 @@ class _QrDialogState extends ConsumerState<QrDialog> {
                       child: CircularProgressIndicator(
                         color: mainColor,
                       ))),
-            if (qrState is QrDataModelError) Text(qrState.message),
+            if (qrState is QrDataModelError)
+              Column(
+                children: [
+                  Text(qrState.message),
+                  SizedBox(
+                    width: 256.w,
+                    height: 256.h,
+                    child: Center(
+                      child: OutlinedButton(
+                        onPressed: _refreshQrCode,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: backgroundColor,
+                          backgroundColor: mainColor,
+                          side: const BorderSide(color: mainColor),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.refresh),
+                            const SizedBox(width: 10),
+                            Text('다시 시도',
+                                style: AppTextStyles.regularSemiText(
+                                    color: backgroundColor)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),

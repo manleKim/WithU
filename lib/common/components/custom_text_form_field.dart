@@ -1,4 +1,5 @@
 import 'package:cbhs/common/const/colors.dart';
+import 'package:cbhs/common/const/font_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -32,14 +33,11 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: obscureText,
       autofocus: autofocus,
       onChanged: onChanged,
-      style: const TextStyle(color: backgroundColor),
+      style: AppTextStyles.basicText(color: backgroundColor),
       decoration: InputDecoration(
         hintText: hintText,
         errorText: errorText,
-        hintStyle: const TextStyle(
-          color: backgroundColor,
-          fontSize: 14.0,
-        ),
+        hintStyle: AppTextStyles.basicText(color: backgroundColor),
         fillColor: mainColor,
         // false - 배경색 없음
         // true - 배경색 있음

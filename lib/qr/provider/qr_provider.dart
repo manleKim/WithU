@@ -1,5 +1,6 @@
 import 'package:cbhs/common/const/data.dart';
 import 'package:cbhs/common/secure_storage/secure_storage.dart';
+import 'package:cbhs/common/util/data.dart';
 import 'package:cbhs/qr/model/qr_data_model.dart';
 import 'package:cbhs/qr/repository/qr_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,7 +38,8 @@ class QrStateNotifier extends StateNotifier<QrDataModelBase> {
       }
 
       final resp = await repository.getQRdata(
-          dormitoryNumber: dormitoryNumber, password: password);
+          dormitoryNumber: getDormitoryFormatted(dormitoryNumber),
+          password: password);
 
       state = resp;
       print(resp.qrData);

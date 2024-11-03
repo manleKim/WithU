@@ -1,4 +1,3 @@
-import 'package:cbhs/common/const/colors.dart';
 import 'package:cbhs/common/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +34,9 @@ class CbhsApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'WithU',
-          // theme: appTheme,
+          theme: ThemeData(
+              colorScheme:
+                  const ColorScheme.light(primary: Colors.transparent)),
           home: child,
         );
       },

@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:980169749869:android:ab040cf4364d01b7fed664",
         "android_client_info": {
-          "package_name": "com.example.cbhs"
+          "package_name": "test.flutter.cbhs"
         }
       },
       "oauth_client": [],
