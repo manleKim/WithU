@@ -22,10 +22,19 @@ class MealRepository {
 
   MealRepository({required this.baseUrl, required this.dio});
 
-  Future<MealListModel> getMeal() async {
-    final currentWeekHtml = await _fetchHtml(baseUrl);
-    final previousWeekHtml = await _fetchHtml('$baseUrl?searchWeek=-1');
-    final nextWeekHtml = await _fetchHtml('$baseUrl?searchWeek=1');
+  Future<MealListModel> getMeal(bool demo) async {
+    String currentWeekHtml;
+    String previousWeekHtml;
+    String nextWeekHtml;
+    if (demo) {
+      currentWeekHtml = await _fetchHtml('http://15.164.196.234:3000/meal/0');
+      previousWeekHtml = await _fetchHtml('http://15.164.196.234:3000/meal/-1');
+      nextWeekHtml = await _fetchHtml('http://15.164.196.234:3000/meal/1');
+    } else {
+      currentWeekHtml = await _fetchHtml(baseUrl);
+      previousWeekHtml = await _fetchHtml('$baseUrl?searchWeek=-1');
+      nextWeekHtml = await _fetchHtml('$baseUrl?searchWeek=1');
+    }
 
     final currentWeekMeals = _parseMeals(currentWeekHtml);
     final previousWeekMeals = _parseMeals(previousWeekHtml);

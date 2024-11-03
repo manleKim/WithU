@@ -32,14 +32,18 @@ class MealTypeSelector extends StatelessWidget {
     return OutlinedButton(
       onPressed: () => onMealTypeChanged(mealType),
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 29),
+        minimumSize: Size.zero,
+        padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 6),
         foregroundColor: isSelected ? backgroundColor : mainColor,
         backgroundColor: isSelected ? mainColor : backgroundColor,
         side: BorderSide(color: isSelected ? mainColor : backgroundColor),
       ),
-      child: Text(label,
-          style: AppTextStyles.regularText().copyWith(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+      child: Text(
+        label,
+        style: AppTextStyles.regularText().copyWith(
+            fontWeight: FontWeight.bold,
+            color: isSelected ? backgroundColor : mainColor),
+      ),
     );
   }
 }

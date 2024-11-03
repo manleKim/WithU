@@ -4,7 +4,6 @@ import 'package:cbhs/common/layout/component_layout.dart';
 import 'package:cbhs/meal/components/meal_type_selector_widget.dart';
 import 'package:cbhs/meal/model/meal_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WeeklyMealInfoWidget extends StatefulWidget {
   final List<MealModel> mealList;
@@ -75,28 +74,38 @@ class _WeeklyMealInfoWidgetState extends State<WeeklyMealInfoWidget> {
       default:
         mealValue = '';
     }
-    return ComponentLayout(
-      height: 270.h,
-      child: Column(
-        children: [
-          MealNavigationRow(
-              currentMeal: currentMeal,
-              onPrevious: _showPreviousMeal,
-              onNext: _showNextMeal),
-          MealTypeSelector(
-              currentMealType: currentMealType,
-              onMealTypeChanged: _setMealType),
-          Expanded(
-            child: Center(
-              child: Text(
-                mealValue,
-                style: AppTextStyles.regularText(),
-                textAlign: TextAlign.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '오늘의 식단',
+          style: AppTextStyles.basicText(),
+        ),
+        const SizedBox(height: 12),
+        ComponentLayout(
+          height: 280,
+          child: Column(
+            children: [
+              MealNavigationRow(
+                  currentMeal: currentMeal,
+                  onPrevious: _showPreviousMeal,
+                  onNext: _showNextMeal),
+              MealTypeSelector(
+                  currentMealType: currentMealType,
+                  onMealTypeChanged: _setMealType),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    mealValue,
+                    style: AppTextStyles.regularText(),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -115,25 +124,29 @@ class MealNavigationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: mainColor,
-          onPressed: onPrevious,
-        ),
-        Text(
-          currentMeal.fullDate,
-          style: AppTextStyles.basicText()
-              .copyWith(color: mainColor, fontWeight: FontWeight.bold),
-        ),
-        IconButton(
-          icon: const Icon(Icons.arrow_forward),
-          color: mainColor,
-          onPressed: onNext,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // IconButton(
+          //   icon: const Icon(Icons.arrow_back),
+          //   color: mainColor,
+          //   onPressed: onPrevious,
+          // ),
+          Text(
+            currentMeal.fullDate,
+            style: AppTextStyles.basicText()
+                .copyWith(color: mainColor, fontWeight: FontWeight.bold),
+          ),
+          // IconButton(
+          //   icon: const Icon(Icons.arrow_forward),
+          //   color: mainColor,
+          //   onPressed: onNext,
+          // ),
+        ],
+      ),
     );
   }
 }

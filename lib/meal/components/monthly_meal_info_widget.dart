@@ -4,7 +4,6 @@ import 'package:cbhs/common/layout/component_layout.dart';
 import 'package:cbhs/meal/components/meal_type_selector_widget.dart';
 import 'package:cbhs/meal/model/meal_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MonthlyMealInfoWidget extends StatefulWidget {
@@ -66,10 +65,10 @@ class _MonthlyMealInfoWidgetState extends State<MonthlyMealInfoWidget> {
               backgroundColor: Colors.transparent,
               insetPadding: EdgeInsets.zero,
               title: Text(mealsForSelectedDay[0].fullDate),
-              titleTextStyle: AppTextStyles.subHeading(),
+              titleTextStyle: AppTextStyles.mainHeading(color: backgroundColor),
               content: ComponentLayout(
                 width: MediaQuery.of(context).size.width,
-                height: 250.h,
+                height: 250,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -118,39 +117,49 @@ class _MonthlyMealInfoWidgetState extends State<MonthlyMealInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ComponentLayout(
-      child: TableCalendar(
-        locale: 'ko_KR',
-        focusedDay: focusedDay,
-        firstDay: sundayOfWeekBefore,
-        lastDay: saturdayOfWeekAfter,
-        onDaySelected: (selectedDay, focusedDay) {
-          setState(() {
-            this.selectedDay = selectedDay;
-            this.focusedDay = focusedDay;
-            _showMealsForSelectedDay(selectedDay);
-          });
-        },
-        selectedDayPredicate: (DateTime day) {
-          return isSameDay(selectedDay, day);
-        },
-        headerStyle: const HeaderStyle(
-          titleCentered: true,
-          formatButtonVisible: false,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '캘린더로 자세히 보기',
+          style: AppTextStyles.basicText(),
         ),
-        calendarStyle: CalendarStyle(
-          todayDecoration: BoxDecoration(
-            color: selectedDay == DateTime.now()
-                ? mainColor
-                : const Color(0x8000AEBB), // Opacity 50%
-            shape: BoxShape.circle,
-          ),
-          selectedDecoration: const BoxDecoration(
-            color: mainColor,
-            shape: BoxShape.circle,
+        const SizedBox(height: 12),
+        ComponentLayout(
+          child: TableCalendar(
+            locale: 'ko_KR',
+            focusedDay: focusedDay,
+            firstDay: sundayOfWeekBefore,
+            lastDay: saturdayOfWeekAfter,
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                this.selectedDay = selectedDay;
+                this.focusedDay = focusedDay;
+                _showMealsForSelectedDay(selectedDay);
+              });
+            },
+            selectedDayPredicate: (DateTime day) {
+              return isSameDay(selectedDay, day);
+            },
+            headerStyle: const HeaderStyle(
+              titleCentered: true,
+              formatButtonVisible: false,
+            ),
+            calendarStyle: CalendarStyle(
+              todayDecoration: BoxDecoration(
+                color: selectedDay == DateTime.now()
+                    ? mainColor
+                    : const Color(0x8000AEBB), // Opacity 50%
+                shape: BoxShape.circle,
+              ),
+              selectedDecoration: const BoxDecoration(
+                color: mainColor,
+                shape: BoxShape.circle,
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
