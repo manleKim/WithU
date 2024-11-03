@@ -37,7 +37,7 @@ class _OverNightDetailScreenState extends ConsumerState<OverNightDetailScreen> {
       case '04': // 무단외박
         return Colors.red;
       case '05': // 귀사시간 이후 전화외박 => 일반 외박과 동일하게 처리
-        return Colors.blue;
+        return const Color(0xFF0E4ABF);
       case 'C': // 귀향
         return const Color(0xFFC8B158);
       default: // 기타
@@ -60,22 +60,6 @@ class _OverNightDetailScreenState extends ConsumerState<OverNightDetailScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10.0),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16,
-                  runSpacing: 4,
-                  children: [
-                    OverNightType(color: mainColor, typeName: '일반외박'),
-                    OverNightType(color: Colors.blue, typeName: '귀사시간 이후 전화외박'),
-                    OverNightType(color: Colors.purple, typeName: '귀가'),
-                    OverNightType(color: Color(0xFFC8B158), typeName: '귀향'),
-                    OverNightType(color: Colors.red, typeName: '무단외박'),
-                    OverNightType(color: Colors.black, typeName: '기타'),
-                  ],
-                ),
-              ),
               state is OverNightDetailModelLoading
                   ? const CircularProgressIndicator(
                       color: mainColor,
@@ -84,61 +68,83 @@ class _OverNightDetailScreenState extends ConsumerState<OverNightDetailScreen> {
                       ? Text(state.message)
                       : state is OverNightDetailEvent
                           ? ComponentLayout(
-                              child: TableCalendar(
-                                locale: 'ko_KR',
-                                focusedDay: now,
-                                firstDay: DateTime(now.year, now.month, 1),
-                                lastDay: DateTime(now.year, now.month + 1, 1)
-                                    .subtract(const Duration(days: 1)),
-                                eventLoader: (day) {
-                                  List<Event> events =
-                                      _getEventsForDay(day, state.events);
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TableCalendar(
+                                  locale: 'ko_KR',
+                                  focusedDay: now,
+                                  firstDay: DateTime(now.year, now.month, 1),
+                                  lastDay: DateTime(now.year, now.month + 1, 1)
+                                      .subtract(const Duration(days: 1)),
+                                  eventLoader: (day) {
+                                    List<Event> events =
+                                        _getEventsForDay(day, state.events);
 
-                                  events.sort((a, b) =>
-                                      a.startDate.compareTo(b.startDate));
-                                  return events;
-                                },
-                                headerStyle: HeaderStyle(
-                                  titleCentered: true,
-                                  formatButtonVisible: false,
-                                  leftChevronVisible: false,
-                                  rightChevronVisible: false,
-                                  titleTextStyle: AppTextStyles.buttonText(),
-                                  headerPadding: const EdgeInsets.symmetric(
-                                      vertical: 20.0),
-                                ),
-                                calendarStyle: const CalendarStyle(
-                                  todayDecoration: BoxDecoration(
-                                    color: mainColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                calendarBuilders: CalendarBuilders(
-                                  markerBuilder: (_, __, events) {
-                                    if (events.isEmpty) return const SizedBox();
-
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: events.map((event) {
-                                        final typeEvent = event as Event;
-                                        return Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 1.5),
-                                          width: 8.0,
-                                          height: 8.0,
-                                          decoration: BoxDecoration(
-                                            color: _getMarkerColor(typeEvent),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    );
+                                    events.sort((a, b) =>
+                                        a.startDate.compareTo(b.startDate));
+                                    return events;
                                   },
+                                  headerStyle: HeaderStyle(
+                                    titleCentered: true,
+                                    formatButtonVisible: false,
+                                    leftChevronVisible: false,
+                                    rightChevronVisible: false,
+                                    titleTextStyle: AppTextStyles.buttonText(),
+                                    headerPadding: const EdgeInsets.symmetric(
+                                        vertical: 20.0),
+                                  ),
+                                  calendarStyle: const CalendarStyle(
+                                    todayDecoration: BoxDecoration(
+                                      color: mainColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  calendarBuilders: CalendarBuilders(
+                                    markerBuilder: (_, __, events) {
+                                      if (events.isEmpty) {
+                                        return const SizedBox();
+                                      }
+
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: events.map((event) {
+                                          final typeEvent = event as Event;
+                                          return Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 1.5),
+                                            width: 8.0,
+                                            height: 8.0,
+                                            decoration: BoxDecoration(
+                                              color: _getMarkerColor(typeEvent),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             )
                           : const SizedBox(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20.0),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 16,
+                  runSpacing: 4,
+                  children: [
+                    OverNightType(color: mainColor, typeName: '일반외박'),
+                    OverNightType(
+                        color: Color(0xFF0E4ABF), typeName: '귀사시간 이후 전화외박'),
+                    OverNightType(color: Colors.purple, typeName: '귀가'),
+                    OverNightType(color: Color(0xFFC8B158), typeName: '귀향'),
+                    OverNightType(color: Colors.red, typeName: '무단외박'),
+                    OverNightType(color: Colors.black, typeName: '기타'),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
