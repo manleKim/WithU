@@ -1,13 +1,13 @@
 import 'package:cbhs/common/const/colors.dart';
 import 'package:cbhs/common/const/font_styles.dart';
 import 'package:cbhs/common/layout/component_layout.dart';
+import 'package:cbhs/user/components/circle_graph.dart';
 import 'package:cbhs/user/model/reassess_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MyDormitoryLifeCard extends StatelessWidget {
-  //final SvgPicture iconSvg;
-  final Icon iconSvg;
+  final SvgPicture iconSvg;
   final String title;
   final String? score;
   final List<ReassessElementModel>? reaseessList;
@@ -37,7 +37,8 @@ class MyDormitoryLifeCard extends StatelessWidget {
               )),
               if (score != null)
                 Text('${score!}점', style: AppTextStyles.subHeading()),
-              const Icon(Icons.keyboard_arrow_right_rounded),
+              const SizedBox(width: 15),
+              SvgPicture.asset('assets/svg/myRoom/right.svg'),
             ],
           ),
           if (reaseessList != null) const SizedBox(height: 14),
@@ -47,9 +48,9 @@ class MyDormitoryLifeCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   renderReassessItem(context, model: reaseessList![0]),
-                  const VerticalDivider(width: 1, color: grayMiddleColor),
+                  const VerticalDivider(width: 1, color: greyMiddleColor),
                   renderReassessItem(context, model: reaseessList![1]),
-                  const VerticalDivider(width: 1, color: grayMiddleColor),
+                  const VerticalDivider(width: 1, color: greyMiddleColor),
                   renderReassessItem(context, model: reaseessList![2]),
                 ],
               ),
@@ -67,10 +68,15 @@ class MyDormitoryLifeCard extends StatelessWidget {
         children: [
           Text(
             model.name,
-            style: AppTextStyles.regularText(color: grayMiddleColor),
+            style: AppTextStyles.regularText(),
           ),
-          Text('${model.count}/${model.satisfiedCount}',
-              style: AppTextStyles.subHeading()),
+          const SizedBox(height: 5),
+          CircleGraph(
+            currentValue: model.count,
+            maxValue: model.satisfiedCount,
+          ),
+          // Text('${model.count}/${model.satisfiedCount}',
+          //     style: AppTextStyles.subHeading()),
         ],
       ),
     );

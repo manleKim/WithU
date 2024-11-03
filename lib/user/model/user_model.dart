@@ -14,6 +14,7 @@ class UserModelError extends UserModelBase {
 class UserModelLoading extends UserModelBase {}
 
 class UserModel extends UserModelBase {
+  final String id;
   final String dormitoryNumber;
   final String name;
   final String roomNum;
@@ -22,6 +23,7 @@ class UserModel extends UserModelBase {
   final List<ReassessElementModel> reassessList;
 
   UserModel({
+    required this.id,
     required this.dormitoryNumber,
     required this.name,
     required this.roomNum,
@@ -34,6 +36,9 @@ class UserModel extends UserModelBase {
       {required Iterable<XmlElement> userAndRewordElements,
       required Iterable<XmlElement> isInElements,
       required Iterable<XmlElement> reassessElements}) {
+    final id = userAndRewordElements
+        .firstWhere((element) => element.getAttribute('id') == 'IDX')
+        .innerText;
     final dormitoryNumber = userAndRewordElements
         .firstWhere((element) => element.getAttribute('id') == 'SCHAFS_NO')
         .innerText;
@@ -88,6 +93,7 @@ class UserModel extends UserModelBase {
     ];
 
     return UserModel(
+      id: id,
       dormitoryNumber: dormitoryNumber,
       name: name,
       roomNum: roomNum,

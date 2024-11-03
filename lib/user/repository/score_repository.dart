@@ -23,28 +23,47 @@ class ScoreRepository {
 
   ScoreRepository({required this.baseUrl, required this.dio});
 
-  Future<List<ScoreDetail>> getTotalScore(String dormitoryNumber) async {
-    final scoreDetailListXml = await _fetchXml(
-        url: '$baseUrl/webRwrPnsInfoSearch.do',
-        data: getScoreDetailXml(dormitoryNumber));
+  // Future<List<ScoreDetail>> getTotalScore(String dormitoryNumber) async {
+  //   XmlDocument scoreDetailListXml;
+  //   if (dormitoryNumber == "19-1049") {
+  //     scoreDetailListXml = await _fetchXml(
+  //         url: 'http://15.164.196.234:3000/score',
+  //         data: getScoreDetailXml(dormitoryNumber));
+  //   } else {
+  //     scoreDetailListXml = await _fetchXml(
+  //         url: '$baseUrl/webRwrPnsInfoSearch.do',
+  //         data: getScoreDetailXml(dormitoryNumber));
+  //   }
 
-    final scoreDetailElements = scoreDetailListXml.findAllElements('Row');
+  //   final scoreDetailElements = scoreDetailListXml.findAllElements('Row');
 
-    if (scoreDetailElements.isEmpty) return [];
+  //   if (scoreDetailElements.isEmpty) return [];
 
-    return scoreDetailElements
-        .map((element) => ScoreDetail.fromXmlElement(element))
-        .toList();
-  }
+  //   return scoreDetailElements
+  //       .map((element) => ScoreDetail.fromXmlElement(element))
+  //       .toList();
+  // }
 
   Future<ScoreModel> getScoreDetailList(String dormitoryNumber) async {
-    final scoreXml = await _fetchXml(
-        url: '$baseUrl/webRwrPnsInfoSearch.do',
-        data: getUserAndRewordXml(dormitoryNumber));
+    XmlDocument scoreXml;
+    XmlDocument scoreDetailListXml;
+    if (dormitoryNumber == "19-1049") {
+      scoreXml = await _fetchXml(
+          url: 'http://15.164.196.234:3000/score',
+          data: getUserAndRewordXml(dormitoryNumber));
 
-    final scoreDetailListXml = await _fetchXml(
-        url: '$baseUrl/webRwrPnsSearch.do',
-        data: getScoreDetailXml(dormitoryNumber));
+      scoreDetailListXml = await _fetchXml(
+          url: 'http://15.164.196.234:3000/score/list',
+          data: getScoreDetailXml(dormitoryNumber));
+    } else {
+      scoreXml = await _fetchXml(
+          url: '$baseUrl/webRwrPnsInfoSearch.do',
+          data: getUserAndRewordXml(dormitoryNumber));
+
+      scoreDetailListXml = await _fetchXml(
+          url: '$baseUrl/webRwrPnsSearch.do',
+          data: getScoreDetailXml(dormitoryNumber));
+    }
 
     final score = scoreXml
         .findAllElements('Col')

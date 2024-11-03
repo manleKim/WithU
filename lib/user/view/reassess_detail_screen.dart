@@ -75,7 +75,7 @@ class _ReassessDetailScreenState extends ConsumerState<ReassessDetailScreen> {
         backgroundColor: mainColor,
         foregroundColor: backgroundColor,
         title: const Text('재사 요건 충족 여부'),
-        titleTextStyle: AppTextStyles.buttonText(color: backgroundColor),
+        titleTextStyle: AppTextStyles.naviTitle(color: backgroundColor),
       ),
       child: SafeArea(
           top: true,

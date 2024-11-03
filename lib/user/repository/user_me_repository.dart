@@ -24,14 +24,30 @@ class UserMeRepository {
   UserMeRepository({required this.baseUrl, required this.dio});
 
   Future<UserModel> getMe(String dormitoryNumber) async {
-    final isInXml = await _fetchXml(
-        url: '$baseUrl/webinoutStatus.do', data: getInOutXml(dormitoryNumber));
-    final userAndRewordXml = await _fetchXml(
-        url: '$baseUrl/webRwrPnsInfoSearch.do',
-        data: getUserAndRewordXml(dormitoryNumber));
-    final reassessListXml = await _fetchXml(
-        url: '$baseUrl/webStdLifeMidCntSearch.do',
-        data: getReassessCountXml(dormitoryNumber, DateTime.now().year));
+    XmlDocument isInXml;
+    XmlDocument userAndRewordXml;
+    XmlDocument reassessListXml;
+    if (dormitoryNumber == "19-1049") {
+      isInXml = await _fetchXml(
+          url: 'http://15.164.196.234:3000/isIn',
+          data: getInOutXml(dormitoryNumber));
+      userAndRewordXml = await _fetchXml(
+          url: 'http://15.164.196.234:3000/score',
+          data: getUserAndRewordXml(dormitoryNumber));
+      reassessListXml = await _fetchXml(
+          url: 'http://15.164.196.234:3000/reassess/cnt',
+          data: getReassessCountXml(dormitoryNumber, DateTime.now().year));
+    } else {
+      isInXml = await _fetchXml(
+          url: '$baseUrl/webinoutStatus.do',
+          data: getInOutXml(dormitoryNumber));
+      userAndRewordXml = await _fetchXml(
+          url: '$baseUrl/webRwrPnsInfoSearch.do',
+          data: getUserAndRewordXml(dormitoryNumber));
+      reassessListXml = await _fetchXml(
+          url: '$baseUrl/webStdLifeMidCntSearch.do',
+          data: getReassessCountXml(dormitoryNumber, DateTime.now().year));
+    }
 
     final isInElements = isInXml.findAllElements('Col');
     final userAndRewordElements = userAndRewordXml.findAllElements('Col');

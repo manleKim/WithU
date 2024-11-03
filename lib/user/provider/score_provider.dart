@@ -1,6 +1,5 @@
 import 'package:cbhs/common/const/data.dart';
 import 'package:cbhs/common/secure_storage/secure_storage.dart';
-import 'package:cbhs/common/util/data.dart';
 import 'package:cbhs/user/model/score_model.dart';
 import 'package:cbhs/user/repository/score_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,8 +35,7 @@ class ScoreStateNotifier extends StateNotifier<ScoreModelBase> {
       state = ScoreModelError(message: '로그아웃 후 이용하시길 바랍니다.');
       return;
     }
-    final resp = await repository
-        .getScoreDetailList(getDormitoryFormatted(dormitoryNumber));
+    final resp = await repository.getScoreDetailList(dormitoryNumber);
 
     state = resp;
   }

@@ -1,6 +1,5 @@
 import 'package:cbhs/common/const/data.dart';
 import 'package:cbhs/common/secure_storage/secure_storage.dart';
-import 'package:cbhs/common/util/data.dart';
 import 'package:cbhs/user/model/reassess_model.dart';
 import 'package:cbhs/user/repository/reassess_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,8 +36,7 @@ class ReassessStateNotifier extends StateNotifier<ReassessModelBase> {
       state = ReassessModelError(message: '로그아웃 후 이용하시길 바랍니다.');
       return;
     }
-    final resp = await repository
-        .getReassessDetailList(getDormitoryFormatted(dormitoryNumber));
+    final resp = await repository.getReassessDetailList(dormitoryNumber);
 
     state = resp;
   }

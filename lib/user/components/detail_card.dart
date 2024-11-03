@@ -39,7 +39,7 @@ class DetailCard extends StatelessWidget {
               Text(title, style: AppTextStyles.regularText()),
               Text(date,
                   style:
-                      AppTextStyles.detailedInfoText(color: grayMiddleColor)),
+                      AppTextStyles.detailedInfoText(color: greyMiddleColor)),
             ],
           ),
         ),

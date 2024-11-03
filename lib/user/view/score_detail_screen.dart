@@ -6,6 +6,7 @@ import 'package:cbhs/user/model/score_model.dart';
 import 'package:cbhs/user/provider/score_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ScoreDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'scoreDetail';
@@ -111,15 +112,15 @@ class _ScoreDetailScreenState extends ConsumerState<ScoreDetailScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Row(
           children: [
-            const Icon(Icons.library_books_outlined, color: backgroundColor),
+            SvgPicture.asset('assets/svg/myRoom/my room_penalty_white.svg'),
             const SizedBox(width: 6),
             Expanded(
                 child: Text(
               '누적 점수',
-              style: AppTextStyles.subHeading(color: backgroundColor),
+              style: AppTextStyles.naviTitle(color: backgroundColor),
             )),
             Text('${state.detailList.fold<int>(0, (p, e) => p + e.score)}점',
-                style: AppTextStyles.subHeading(color: backgroundColor)),
+                style: AppTextStyles.naviTitle(color: backgroundColor)),
           ],
         ),
       ),
