@@ -1,3 +1,24 @@
+String loginXml(String dormitoryNumber, String password) {
+  return '''<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns="http://www.nexacroplatform.com/platform/dataset">
+	<Parameters />
+	<Dataset id="dsSearch">
+		<ColumnInfo>
+			<Column id="USER_ID" type="STRING" size="256" />
+			<Column id="PASSWORD" type="STRING" size="256" />
+			<Column id="BRHS_CODE" type="STRING" size="256" />
+		</ColumnInfo>
+		<Rows>
+			<Row>
+				<Col id="USER_ID">$dormitoryNumber</Col>
+				<Col id="PASSWORD">$password</Col>
+				<Col id="BRHS_CODE">SS</Col>
+			</Row>
+		</Rows>
+	</Dataset>
+</Root>''';
+}
+
 String getInOutXml(String dormitoryNumber) {
   return '''<?xml version="1.0" encoding="UTF-8"?>
 <Root xmlns="http://www.nexacroplatform.com/platform/dataset">

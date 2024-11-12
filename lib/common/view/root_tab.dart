@@ -24,7 +24,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 5, vsync: this);
+    controller = TabController(length: 4, vsync: this);
     controller.addListener(tabListener);
   }
 
@@ -67,11 +67,11 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
               type: BottomNavigationBarType.fixed,
               selectedFontSize: 12,
               onTap: (int index) {
-                if (index == 2) {
-                  _showCustomDialog(context);
-                } else {
-                  controller.animateTo(index);
-                }
+                // if (index == 2) {
+                //   _showCustomDialog(context);
+                // } else {
+                controller.animateTo(index);
+                // }
               },
               currentIndex: index,
               items: [
@@ -93,20 +93,20 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     label: "외박/귀향"),
-                BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      'assets/svg/tab/tab_QR.svg',
-                      colorFilter: const ColorFilter.mode(
-                        backgroundColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    label: ""),
+                // BottomNavigationBarItem(
+                //     icon: SvgPicture.asset(
+                //       'assets/svg/tab/tab_QR.svg',
+                //       colorFilter: const ColorFilter.mode(
+                //         backgroundColor,
+                //         BlendMode.srcIn,
+                //       ),
+                //     ),
+                //     label: ""),
                 BottomNavigationBarItem(
                     icon: SvgPicture.asset(
                       'assets/svg/tab/tab_menu.svg',
                       colorFilter: ColorFilter.mode(
-                        index == 3 ? mainColor : greyNavigationColor,
+                        index == 2 ? mainColor : greyNavigationColor,
                         BlendMode.srcIn,
                       ),
                     ),
@@ -115,37 +115,37 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
                     icon: SvgPicture.asset(
                       'assets/svg/tab/tab_myroom.svg',
                       colorFilter: ColorFilter.mode(
-                        index == 4 ? mainColor : greyNavigationColor,
+                        index == 3 ? mainColor : greyNavigationColor,
                         BlendMode.srcIn,
                       ),
                     ),
                     label: "마이룸"),
               ],
             ),
-            Positioned(
-              left: MediaQuery.of(context).size.width / 2 - 30,
-              top: -10,
-              child: GestureDetector(
-                onTap: () {
-                  _showCustomDialog(context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color: mainColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: backgroundColor, width: 4),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/svg/tab/tab_QR.svg',
-                    colorFilter: const ColorFilter.mode(
-                      backgroundColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   left: MediaQuery.of(context).size.width / 2 - 30,
+            //   top: -10,
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       _showCustomDialog(context);
+            //     },
+            //     child: Container(
+            //       padding: const EdgeInsets.all(18),
+            //       decoration: BoxDecoration(
+            //         color: mainColor,
+            //         shape: BoxShape.circle,
+            //         border: Border.all(color: backgroundColor, width: 4),
+            //       ),
+            //       child: SvgPicture.asset(
+            //         'assets/svg/tab/tab_QR.svg',
+            //         colorFilter: const ColorFilter.mode(
+            //           backgroundColor,
+            //           BlendMode.srcIn,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -155,7 +155,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         children: const [
           HomeScreen(),
           OverNightScreen(),
-          Center(child: Text('QR')),
+          // Center(child: Text('QR')),
           MealScreen(),
           UserMeScreen(),
         ],

@@ -6,11 +6,13 @@ import 'package:cbhs/common/layout/default_layout.dart';
 import 'package:cbhs/common/secure_storage/secure_storage.dart';
 import 'package:cbhs/common/util/data.dart';
 import 'package:cbhs/common/view/root_tab.dart';
+import 'package:cbhs/user/xmls/xmls.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart' as http;
+import 'package:xml/xml.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -64,21 +66,52 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 20.0),
                 OutlinedButton(
                   onPressed: () async {
-                    final String baseURL = (dotenv.env['LOGIN_URL'] as String);
+                    if ((dormitoryNumber == dotenv.env['ADMIN_ID'] as String) &&
+                        (password == dotenv.env['ADMIN_PASSWARD'] as String)) {
+                      await storage.write(
+                          key: DORMITORY_NUMBER_KEY, value: dormitoryNumber);
+                      await storage.write(key: PASSWORD_KEY, value: password);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const RootTab()));
 
-                    final resp = await http.post(
-                      Uri.parse('$baseURL/employee/loginProc.jsp'),
-                      headers: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                      },
-                      body:
-                          'USER_ID=${getDormitoryFormatted(dormitoryNumber)}&USER_PW=$password',
-                    );
+                      return;
+                    }
 
-                    if (resp.statusCode == 200) {
-                      //로그인 오류
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('아이디와 비밀번호를 다시 입력해주세요')));
+                    final String baseURL =
+                        (dotenv.env['DORMITORY_URL'] as String);
+                    final dio = Dio(BaseOptions(
+                      connectTimeout: const Duration(seconds: 6), // 6초 타임아웃 설정
+                    ));
+
+                    final resp = await dio.post('$baseURL/cbhsLoginStd.do',
+                        options: Options(
+                          headers: {
+                            'Content-Type': 'text/xml',
+                          },
+                        ),
+                        data: loginXml(
+                            dormitoryNumber, getPasswordFormatted(password)));
+
+                    print(dormitoryNumber);
+                    print(getPasswordFormatted(password));
+
+                    if (resp.statusCode != 200) {
+                      //네트워크 오류
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('네트워크 오류')));
+                      return;
+                    }
+                    final document = XmlDocument.parse(resp.data);
+
+                    // "CNT" 값이 0인 경우 실패로 간주
+                    final cntElements = document.findAllElements('Col').where(
+                        (element) => element.getAttribute('id') == 'CNT');
+                    if (cntElements.isNotEmpty &&
+                        cntElements.first.innerText == '0') {
+                      // 실패 시 메시지 표시
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('아이디와 비밀번호를 다시 입력해주세요')),
+                      );
                       return;
                     }
 
