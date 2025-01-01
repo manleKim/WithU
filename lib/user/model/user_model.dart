@@ -53,9 +53,13 @@ class UserModel extends UserModelBase {
                 (element) => element.getAttribute('id') == 'NOW_STTS_CD')
             .innerText ==
         "입실";
+
+    // rewordScore 기본값 처리
     final rewordScore = userAndRewordElements
         .firstWhere(
-            (element) => element.getAttribute('id') == 'RWRPNS_SCORE_TOT')
+          (element) => element.getAttribute('id') == 'RWRPNS_SCORE_TOT',
+          orElse: () => XmlElement(XmlName('Col'), [], [XmlText('0')]),
+        )
         .innerText;
 
     // 특강

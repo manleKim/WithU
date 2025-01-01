@@ -7,8 +7,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final htmlDioProvider = Provider<Dio>((ref) {
   final dio = Dio(BaseOptions(
-    connectTimeout: const Duration(seconds: 6), // 6초 타임아웃 설정
-  ));
+      // connectTimeout: const Duration(seconds: 6), // 6초 타임아웃 설정
+      ));
 
   final storage = ref.watch(secureStorageProvider);
 

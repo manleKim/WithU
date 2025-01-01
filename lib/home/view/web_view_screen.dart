@@ -15,7 +15,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   final WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..loadRequest(
-      Uri.parse('http://www.cbhs.kr/main'),
+      Uri.parse('https://cbhs.kr'),
     );
 
   @override
