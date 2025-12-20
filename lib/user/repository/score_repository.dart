@@ -27,7 +27,7 @@ class ScoreRepository {
   //   XmlDocument scoreDetailListXml;
   //   if (dormitoryNumber == "19-1049") {
   //     scoreDetailListXml = await _fetchXml(
-  //         url: 'http://15.164.196.234:3000/score',
+  //         url: 'http://13.124.69.84:3000/score',
   //         data: getScoreDetailXml(dormitoryNumber));
   //   } else {
   //     scoreDetailListXml = await _fetchXml(
@@ -47,13 +47,13 @@ class ScoreRepository {
   Future<ScoreModel> getScoreDetailList(String dormitoryNumber) async {
     XmlDocument scoreXml;
     XmlDocument scoreDetailListXml;
-    if (dormitoryNumber == "19-1049") {
+    if (dormitoryNumber == "19-1018") {
       scoreXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/score',
+          url: 'http://13.124.69.84:3000/score',
           data: getUserAndRewordXml(dormitoryNumber));
 
       scoreDetailListXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/score/list',
+          url: 'http://13.124.69.84:3000/score/list',
           data: getScoreDetailXml(dormitoryNumber));
     } else {
       scoreXml = await _fetchXml(
@@ -68,8 +68,11 @@ class ScoreRepository {
     final score = scoreXml
         .findAllElements('Col')
         .firstWhere(
-            (element) => element.getAttribute('id') == 'RWRPNS_SCORE_TOT')
+          (element) => element.getAttribute('id') == 'RWRPNS_SCORE_TOT',
+          orElse: () => XmlElement(XmlName('Col'), [], [XmlText('0')]),
+        )
         .innerText;
+
     final scoreDetailElements = scoreDetailListXml.findAllElements('Row');
 
     return ScoreModel.fromXmlElement(

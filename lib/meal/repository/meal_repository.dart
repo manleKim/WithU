@@ -27,9 +27,9 @@ class MealRepository {
     String previousWeekHtml;
     String nextWeekHtml;
     if (demo) {
-      currentWeekHtml = await _fetchHtml('http://15.164.196.234:3000/meal/0');
-      previousWeekHtml = await _fetchHtml('http://15.164.196.234:3000/meal/-1');
-      nextWeekHtml = await _fetchHtml('http://15.164.196.234:3000/meal/1');
+      currentWeekHtml = await _fetchHtml('http://13.124.69.84:3000/meal/0');
+      previousWeekHtml = await _fetchHtml('http://13.124.69.84:3000/meal/-1');
+      nextWeekHtml = await _fetchHtml('http://13.124.69.84:3000/meal/1');
     } else {
       currentWeekHtml = await _fetchHtml(baseUrl);
       previousWeekHtml = await _fetchHtml('$baseUrl?searchWeek=-1');

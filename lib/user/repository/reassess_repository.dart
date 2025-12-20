@@ -26,12 +26,12 @@ class ReassessRepository {
   Future<ReassessModel> getReassessDetailList(String dormitoryNumber) async {
     XmlDocument reassessCountXml;
     XmlDocument reassessDetailListXml;
-    if (dormitoryNumber == "19-1049") {
+    if (dormitoryNumber == "19-1018") {
       reassessCountXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/reassess/cnt',
+          url: 'http://13.124.69.84:3000/reassess/cnt',
           data: getReassessCountXml(dormitoryNumber, DateTime.now().year));
       reassessDetailListXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/reassess/list',
+          url: 'http://13.124.69.84:3000/reassess/list',
           data: getReassessCountXml(dormitoryNumber, DateTime.now().year));
     } else {
       reassessCountXml = await _fetchXml(

@@ -27,15 +27,15 @@ class UserMeRepository {
     XmlDocument isInXml;
     XmlDocument userAndRewordXml;
     XmlDocument reassessListXml;
-    if (dormitoryNumber == "19-1049") {
+    if (dormitoryNumber == "19-1018") {
       isInXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/isIn',
+          url: 'http://13.124.69.84:3000/isIn',
           data: getInOutXml(dormitoryNumber));
       userAndRewordXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/score',
+          url: 'http://13.124.69.84:3000/score',
           data: getUserAndRewordXml(dormitoryNumber));
       reassessListXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/reassess/cnt',
+          url: 'http://13.124.69.84:3000/reassess/cnt',
           data: getReassessCountXml(dormitoryNumber, DateTime.now().year));
     } else {
       isInXml = await _fetchXml(

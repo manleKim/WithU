@@ -26,7 +26,7 @@ class MealStateNotifier extends StateNotifier<MealModelBase> {
     try {
       final dormitoryNumber = await storage.read(key: DORMITORY_NUMBER_KEY);
       MealListModel resp;
-      if (dormitoryNumber == "19-1049") {
+      if (dormitoryNumber == "19-1018") {
         resp = await repository.getMeal(true);
       } else {
         resp = await repository.getMeal(false);

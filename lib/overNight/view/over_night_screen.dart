@@ -224,6 +224,27 @@ class _DirectOverNightState extends ConsumerState<DirectOverNight> {
     _initializeDates();
   }
 
+  @override
+  void didUpdateWidget(covariant DirectOverNight oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // selectedOverNightType 변경 시 초기화 작업
+    if (oldWidget.selectedOverNightType != widget.selectedOverNightType) {
+      setState(() {
+        selectedDays = 1;
+        reasonType = null;
+        reasonDetail = null;
+        destinationState = null;
+        destinationCity = null;
+
+        // 특별 처리: 귀향 신청 시 목적지 도를 충북으로 설정
+        if (widget.selectedOverNightType == 'returnHome') {
+          selectedDays = 14;
+          destinationState = destinations[13]; //충북
+        }
+      });
+    }
+  }
+
   void _initializeDates() {
     DateTime now = DateTime.now();
     if (now.hour < 1) {
@@ -423,6 +444,13 @@ class _DirectOverNightState extends ConsumerState<DirectOverNight> {
                     onTap: () {
                       setState(() {
                         reasonType = reason;
+                        // detailList 크기가 1이면 자동 설정
+                        if (reason.detailList != null &&
+                            reason.detailList!.length == 1) {
+                          reasonDetail = reason.detailList!.first;
+                        } else {
+                          reasonDetail = null;
+                        }
                       });
                       Navigator.pop(context);
                     },
@@ -488,6 +516,14 @@ class _DirectOverNightState extends ConsumerState<DirectOverNight> {
                       onTap: () {
                         setState(() {
                           destinationState = destinations[index];
+                          // detailList 크기가 1이면 자동 설정
+                          if (destinationState!.detailList != null &&
+                              destinationState!.detailList!.length == 1) {
+                            destinationCity =
+                                destinationState!.detailList!.first;
+                          } else {
+                            destinationCity = null;
+                          }
                         });
                         Navigator.pop(context);
                       },

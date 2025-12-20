@@ -26,9 +26,9 @@ class OverNightRepository {
   Future<OverNightDetailEvent> getOverNightDetailList(
       String dormitoryNumber) async {
     XmlDocument overNightDetailXml;
-    if (dormitoryNumber == "19-1049") {
+    if (dormitoryNumber == "19-1018") {
       overNightDetailXml = await _fetchXml(
-          url: 'http://15.164.196.234:3000/overNight/list',
+          url: 'http://13.124.69.84:3000/overNight/list',
           data: getOverNightDetailXml(dormitoryNumber));
     } else {
       overNightDetailXml = await _fetchXml(
@@ -59,7 +59,7 @@ class OverNightRepository {
     Response<dynamic> resp;
     if (type == 'overNight') {
       if (id == "7057") {
-        resp = await dio.post('http://15.164.196.234:3000/overNight/save',
+        resp = await dio.post('http://13.124.69.84:3000/overNight/save',
             data: postOverNightXml(
                 id: id,
                 startDate: startDate,
@@ -81,7 +81,7 @@ class OverNightRepository {
       }
     } else {
       if (id == "7057") {
-        resp = await dio.post('http://15.164.196.234:3000/goHome/save',
+        resp = await dio.post('http://13.124.69.84:3000/goHome/save',
             data: postGoHomeXml(
                 id: id,
                 startDate: startDate,

@@ -8,8 +8,8 @@ import 'package:cbhs/user/components/my_dormitory_life_card.dart';
 import 'package:cbhs/user/model/user_model.dart';
 import 'package:cbhs/user/provider/user_me_provider.dart';
 import 'package:cbhs/user/view/login_screen.dart';
-import 'package:cbhs/user/view/reassess_detail_screen.dart';
-import 'package:cbhs/user/view/score_detail_screen.dart';
+// import 'package:cbhs/user/view/reassess_detail_screen.dart';
+// import 'package:cbhs/user/view/score_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,16 +37,48 @@ class _UserMeScreenState extends ConsumerState<UserMeScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(userMeProvider);
 
+    Widget logoutButton() {
+      return PaddingLayout(
+        top: 20,
+        child: InkWell(
+          onTap: () async {
+            await storage.deleteAll();
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const LoginScreen()),
+              (route) => false,
+            );
+          },
+          child: const SizedBox(
+            width: double.infinity,
+            child: Text('로그아웃'),
+          ),
+        ),
+      );
+    }
+
     // 완전 처음 로딩일때
     if (state is UserModelLoading) {
-      return const DefaultLayout(
+      return DefaultLayout(
         child: SafeArea(
           top: true,
           bottom: false,
-          child: Center(
-            child: CircularProgressIndicator(
-              color: mainColor,
-            ),
+          child: Column(
+            children: [
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: CircularProgressIndicator(
+                    color: mainColor,
+                  ),
+                ),
+              ),
+              Container(
+                height: 8,
+                width: double.infinity,
+                color: greyLightColor,
+              ),
+              logoutButton(),
+            ],
           ),
         ),
       );
@@ -54,27 +86,42 @@ class _UserMeScreenState extends ConsumerState<UserMeScreen> {
 
     // 에러
     if (state is UserModelError) {
-      return Center(
-        child: PaddingLayout(
+      return SafeArea(
+        top: true,
+        bottom: false,
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                state.message,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.buttonText(),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  ref.read(userMeProvider.notifier).getMe();
-                },
-                child: Text(
-                  '다시시도',
-                  style: AppTextStyles.buttonText(),
+              PaddingLayout(
+                top: 20,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      state.message,
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.buttonText(),
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        ref.read(userMeProvider.notifier).getMe();
+                      },
+                      child: Text(
+                        '다시시도',
+                        style: AppTextStyles.buttonText(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              Container(
+                height: 8,
+                width: double.infinity,
+                color: greyLightColor,
+              ),
+              logoutButton(),
             ],
           ),
         ),
@@ -97,34 +144,34 @@ class _UserMeScreenState extends ConsumerState<UserMeScreen> {
                   SizedBox(height: 30.h),
                   Text('나의 학사 생활', style: AppTextStyles.buttonText()),
                   SizedBox(height: 12.h),
-                  if (state is UserModel)
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                const ReassessDetailScreen()));
-                      },
-                      child: MyDormitoryLifeCard(
-                        iconSvg: SvgPicture.asset(
-                            'assets/svg/myRoom/my room_list.svg'),
-                        title: '재사 요건 충족 여부',
-                        reaseessList: state.reassessList,
-                      ),
-                    ),
-                  SizedBox(height: 14.h),
-                  if (state is UserModel)
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ScoreDetailScreen()));
-                      },
-                      child: MyDormitoryLifeCard(
-                          iconSvg: SvgPicture.asset(
-                              'assets/svg/myRoom/my room_penalty_blue.svg'),
-                          title: '상벌점 내역 차트',
-                          score: state.rewordScore),
-                    ),
-                  SizedBox(height: 14.h),
+                  // if (state is UserModel)
+                  //   GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.of(context).push(MaterialPageRoute(
+                  //           builder: (context) =>
+                  //               const ReassessDetailScreen()));
+                  //     },
+                  //     child: MyDormitoryLifeCard(
+                  //       iconSvg: SvgPicture.asset(
+                  //           'assets/svg/myRoom/my room_list.svg'),
+                  //       title: '재사 요건 충족 여부',
+                  //       reaseessList: state.reassessList,
+                  //     ),
+                  //   ),
+                  // SizedBox(height: 14.h),
+                  // if (state is UserModel)
+                  //   GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.of(context).push(MaterialPageRoute(
+                  //           builder: (context) => const ScoreDetailScreen()));
+                  //     },
+                  //     child: MyDormitoryLifeCard(
+                  //         iconSvg: SvgPicture.asset(
+                  //             'assets/svg/myRoom/my room_penalty_blue.svg'),
+                  //         title: '상벌점 내역 차트',
+                  //         score: state.rewordScore),
+                  //   ),
+                  // SizedBox(height: 14.h),
                   if (state is UserModel)
                     GestureDetector(
                       onTap: () {
@@ -146,22 +193,7 @@ class _UserMeScreenState extends ConsumerState<UserMeScreen> {
               width: double.infinity,
               color: greyLightColor,
             ),
-            PaddingLayout(
-              top: 20,
-              child: InkWell(
-                onTap: () async {
-                  await storage.deleteAll();
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
-                    (route) => false,
-                  );
-                },
-                child: const SizedBox(
-                  width: double.infinity,
-                  child: Text('로그아웃'),
-                ),
-              ),
-            ),
+            logoutButton(),
             // PaddingLayout(
             //   top: 20,
             //   child: InkWell(

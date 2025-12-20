@@ -4,11 +4,11 @@ import 'package:cbhs/common/layout/component_layout.dart';
 import 'package:cbhs/common/layout/default_layout.dart';
 import 'package:cbhs/common/layout/padding_layout.dart';
 import 'package:cbhs/home/view/components/recent_over_night_widget.dart';
-import 'package:cbhs/home/view/components/reward_penalty_graph.dart';
+// import 'package:cbhs/home/view/components/reward_penalty_graph.dart';
 import 'package:cbhs/home/view/web_view_screen.dart';
 import 'package:cbhs/meal/model/meal_model.dart';
 import 'package:cbhs/meal/provider/meal_provider.dart';
-import 'package:cbhs/user/model/user_model.dart';
+// import 'package:cbhs/user/model/user_model.dart';
 import 'package:cbhs/user/provider/user_me_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,17 +29,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(userMeProvider.notifier).getMe();
+    //ref.read(userMeProvider.notifier).getMe();
     ref.read(mealProvider.notifier).getMeal();
   }
 
   @override
   Widget build(BuildContext context) {
     final mealState = ref.watch(mealProvider);
-    final scoreState = ref.watch(userMeProvider);
+    //final scoreState = ref.watch(userMeProvider);
 
     // 완전 처음 로딩일때
-    if (mealState is MealModelLoading || scoreState is UserModelLoading) {
+    if (mealState is MealModelLoading) {
+      //|| scoreState is UserModelLoading
       return const DefaultLayout(
         child: SafeArea(
           top: true,
@@ -54,7 +55,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     // 에러
-    if (mealState is MealModelError && scoreState is UserModelError) {
+    if (mealState is MealModelError) {
+      // && scoreState is UserModelError
       return Center(
         child: PaddingLayout(
           child: Column(
@@ -82,7 +84,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       );
     }
-    if (mealState is MealListModel && scoreState is UserModel) {
+    if (mealState is MealListModel) {
+      //&& scoreState is UserModel
       return DefaultLayout(
           child: SafeArea(
         top: true,
@@ -132,32 +135,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              ComponentLayout(
-                radius: 15,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '상벌점 누계',
-                        style: AppTextStyles.regularText(color: mainColor),
-                      ),
-                      const SizedBox(height: 5),
-                      Text('${scoreState.rewordScore}점',
-                          style: AppTextStyles.subHeading()),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: RewardPenaltyGraph(
-                            points: int.parse(scoreState.rewordScore)),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // const SizedBox(height: 20),
+              // ComponentLayout(
+              //   radius: 15,
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(
+              //         horizontal: 20.0, vertical: 15),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           '상벌점 누계',
+              //           style: AppTextStyles.regularText(color: mainColor),
+              //         ),
+              //         const SizedBox(height: 5),
+              //         Text('${scoreState.rewordScore}점',
+              //             style: AppTextStyles.subHeading()),
+              //         const SizedBox(height: 10),
+              //         Padding(
+              //           padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              //           child: RewardPenaltyGraph(
+              //               points: int.parse(scoreState.rewordScore)),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         )),

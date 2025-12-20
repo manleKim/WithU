@@ -83,7 +83,7 @@ class _WeeklyMealInfoWidgetState extends State<WeeklyMealInfoWidget> {
         ),
         const SizedBox(height: 12),
         ComponentLayout(
-          height: 280,
+          height: 300,
           child: Column(
             children: [
               MealNavigationRow(
